@@ -3,7 +3,7 @@ name: Build merge_cli macOS
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
