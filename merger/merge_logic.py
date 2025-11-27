@@ -21,6 +21,14 @@ def load_zlib_data(depth_map_path, num_of_frames, frame_h, frame_w, dtype=np.uin
           print("Decompression failed:", e)
       return depth_map
   
+def alight_map_with_rbg_frame(depth_map, image_height, image_width):
+  rotated_depth_image_90 = cv2.rotate(depth_map, cv2.ROTATE_90_CLOCKWISE)
+  return cv2.resize(
+    rotated_depth_image_90.astype(np.float32),
+    (image_width, image_height),
+    interpolation=cv2.INTER_LINEAR,
+  )
+  
   
 def load_video_as_array(video_path):
     cap = cv2.VideoCapture(video_path)
@@ -86,6 +94,8 @@ def merge_two_matrix(output_path, fps, rgb_matrix, depth_map,image_height, image
     for idx in tqdm(range(num_frames)):
         depth_frame = depth_map[idx]
         rgb_frame = rgb_matrix[idx]
+
+        depth_frame = alight_map_with_rbg_frame(depth_frame, image_height, image_width)
 
         if cmap is None:
           merged_frame = merge_func(rgb_frame, depth_frame)
