@@ -29,7 +29,7 @@ jobs:
           pyinstaller --onedir merge_cli.py
 
       - name: Upload macOS binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: merge_cli-macos
           path: dist/merge_cli/
