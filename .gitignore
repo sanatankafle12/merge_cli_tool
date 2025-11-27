@@ -1,0 +1,12 @@
+*.mp4
+*.zlib
+*.jsonl
+*.json
+merged.mp4
+build/
+dist/
+*.ipynb
+.venv/  
+merger/depthmap_merged.mkv
+video
+
