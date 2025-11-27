@@ -1,0 +1,35 @@
+name: Build merge_cli macOS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller opencv-python numpy
+
+      - name: Build merge_cli
+        run: |
+          pyinstaller --onedir merge_cli.py
+
+      - name: Upload macOS binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: merge_cli-macos
+          path: dist/merge_cli/
